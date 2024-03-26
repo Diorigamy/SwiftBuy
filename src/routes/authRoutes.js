@@ -6,6 +6,30 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+// Google Authentication
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+    // Successful authentication, redirect to dashboard or homepage
+    res.redirect('/');
+});
+
+// Facebook Authentication
+router.get('/facebook', passport.authenticate('facebook'));
+
+router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
+    // Successful authentication, redirect to dashboard or homepage
+    res.redirect('/');
+});
+
+// Twitter Authentication
+router.get('/twitter', passport.authenticate('twitter'));
+
+router.get('/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), (req, res) => {
+    // Successful authentication, redirect to dashboard or homepage
+    res.redirect('/');
+});
+
 // Register a new user
 router.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
